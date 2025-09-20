@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Prueba Cámara
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-button expand="block" (click)="takePhoto()">
+    📸 Tomar Foto
+  </ion-button>
+
+  <div *ngIf="photo">
+    <h2>Foto tomada:</h2>
+    <ion-img [src]="photo"></ion-img>
+  </div>
+</ion-content>
