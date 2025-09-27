@@ -1,26 +1,40 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { CartService } from 'src/app/services/cart.service';
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { IonicModule } from '@ionic/angular';
+import { HttpClientModule } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { CarritoService } from '../../services/carrito.service';
+import { ProductosService } from '../../services/productos.service';
 
 @Component({
+  standalone: true,
   selector: 'app-productos',
   templateUrl: './productos.page.html',
   styleUrls: ['./productos.page.scss'],
+  imports: [CommonModule, IonicModule, HttpClientModule],
 })
-export class ProductosPage implements OnInit {
-  products: any[] = [];
+export class ProductosPage {
+  productos: any[] = [];
 
-  constructor(private http: HttpClient, private cartService: CartService) {}
+  constructor(
+    private productosSvc: ProductosService,
+    private carritoSvc: CarritoService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
-    this.http.get<any[]>('https://fakestoreapi.com/products')
-      .subscribe(data => {
-        this.products = data;
-      });
+    this.productosSvc.getProductos().subscribe({
+      next: (data) => this.productos = data,
+      error: () => console.error('Error cargando productos')
+    });
   }
 
-  addToCart(product: any) {
-    this.cartService.addToCart(product);
-    alert(`${product.title} agregado al carrito`);
+  agregarAlCarrito(producto: any) {
+    this.carritoSvc.addProducto(producto);
+    alert(`${producto.nombre} agregado al carrito`);
+  }
+
+  verCarrito() {
+    this.router.navigate(['/carrito']);
   }
 }

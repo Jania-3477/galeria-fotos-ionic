@@ -1,37 +1,39 @@
 import { Component } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
-import { CommonModule } from '@angular/common';
-import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
+import { CommonModule, CurrencyPipe } from '@angular/common';
+import { ProductosService } from '../services/productos.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tab1',
-  templateUrl: 'tab1.page.html',
-  styleUrls: ['tab1.page.scss'],
+  templateUrl: './tab1.page.html',
+  styleUrls: ['./tab1.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule],
+  imports: [IonicModule, CommonModule, CurrencyPipe]
 })
 export class Tab1Page {
-  photo: string | null = null;
+  productos: any[] = [];
+  carrito: any[] = [];
 
-  async takePhoto() {
-    console.log('📸 Intentando abrir cámara...');
-    
-    const permStatus = await Camera.requestPermissions({ permissions: ['camera'] });
-    console.log('🔑 Estado permisos:', permStatus);
+  constructor(private productosService: ProductosService, private router: Router) {}
 
-    if (permStatus.camera !== 'granted') {
-      alert('Debes habilitar el permiso de cámara en Ajustes');
-      return;
-    }
+  ngOnInit() {
+    this.productosService.getProductos().subscribe(data => {
+  this.productos = data;
+});
 
-    const capturedPhoto = await Camera.getPhoto({
-      resultType: CameraResultType.Uri,
-      source: CameraSource.Camera,
-      quality: 100,
-    });
+  }
 
-    console.log('✅ Foto capturada:', capturedPhoto);
+  agregarAlCarrito(producto: any) {
+    this.carrito.push(producto);
+    alert(`${producto.nombre} agregado al carrito`);
+  }
 
-    this.photo = capturedPhoto.webPath || null;
+  irAGaleria() {
+    this.router.navigate(['/galeria']);
+  }
+
+  verCarrito() {
+    this.router.navigate(['/carrito'], { state: { carrito: this.carrito } });
   }
 }

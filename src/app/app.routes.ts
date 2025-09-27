@@ -1,16 +1,13 @@
 import { Routes } from '@angular/router';
+import { LoginPage } from './pages/login/login.page';
+import { Tab1Page } from './tab1/tab1.page';
+import { ProductosPage } from './pages/productos/productos.page';
+import { CarritoPage } from './pages/carrito/carrito.page';
 
 export const routes: Routes = [
-  {
-    path: '',
-    loadChildren: () => import('./tabs/tabs.routes').then((m) => m.routes),
-  },
-  {
-    path: 'login',
-    loadComponent: () => import('./pages/login/login.page').then( m => m.LoginPage)
-  },
-  {
-    path: 'productos',
-    loadComponent: () => import('./pages/productos/productos.page').then( m => m.ProductosPage)
-  },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: 'login', component: LoginPage },
+  { path: 'tab1', component: Tab1Page },
+  { path: 'productos', component: ProductosPage },
+  { path: 'carrito', component: CarritoPage },
 ];

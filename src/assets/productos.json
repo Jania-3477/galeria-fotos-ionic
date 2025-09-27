@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "nombre": "Cámara DSLR Canon",
+    "precio": 450.00,
+    "imagen": "assets/img/camara.jpg"
+  },
+  {
+    "id": 2,
+    "nombre": "Smartphone Samsung Galaxy",
+    "precio": 299.99,
+    "imagen": "assets/img/smartphone.jpg"
+  },
+  {
+    "id": 3,
+    "nombre": "Laptop HP Pavilion",
+    "precio": 799.00,
+    "imagen": "assets/img/laptop.jpg"
+  },
+  {
+    "id": 4,
+    "nombre": "Auriculares Bluetooth",
+    "precio": 39.90,
+    "imagen": "assets/img/auriculares.jpg"
+  },
+  {
+    "id": 5,
+    "nombre": "Mouse inalámbrico Logitech",
+    "precio": 19.99,
+    "imagen": "assets/img/mouse.jpg"
+  }
+]

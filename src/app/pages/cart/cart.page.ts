@@ -1,37 +1,39 @@
 import { Component, OnInit } from '@angular/core';
-import { CartService } from 'src/app/services/cart.service';
+import { IonicModule } from '@ionic/angular';
+import { CommonModule } from '@angular/common';
+import { Storage } from '@ionic/storage-angular';
 
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.page.html',
   styleUrls: ['./cart.page.scss'],
+  standalone: true,
+  imports: [IonicModule, CommonModule] // <--- aquí está la clave
 })
 export class CartPage implements OnInit {
-  cartItems: any[] = [];
-  total: number = 0;
+  cart: any[] = [];
 
-  constructor(private cartService: CartService) {}
+  constructor(private storage: Storage) {}
 
-  ngOnInit() {
+  async ngOnInit() {
     this.loadCart();
   }
 
-  ionViewWillEnter() {
+  async ionViewWillEnter() {
     this.loadCart();
   }
 
-  loadCart() {
-    this.cartItems = this.cartService.getCart();
-    this.total = this.cartService.getTotal();
+  async loadCart() {
+    this.cart = (await this.storage.get('cart')) || [];
   }
 
-  removeItem(index: number) {
-    this.cartService.removeFromCart(index);
-    this.loadCart();
+  async removeItem(index: number) {
+    this.cart.splice(index, 1);
+    await this.storage.set('cart', this.cart);
   }
 
-  clearCart() {
-    this.cartService.clearCart();
-    this.loadCart();
+  async clearCart() {
+    this.cart = [];
+    await this.storage.set('cart', []);
   }
 }

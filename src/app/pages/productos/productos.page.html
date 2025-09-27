@@ -1,20 +1,23 @@
 <ion-header>
-  <ion-toolbar color="primary">
-    <ion-title>Productos</ion-title>
+  <ion-toolbar>
+    <ion-title>Galería de Productos</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="verCarrito()">Carrito</ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
   <ion-list>
-    <ion-item *ngFor="let product of products">
+    <ion-item *ngFor="let producto of productos">
       <ion-thumbnail slot="start">
-        <img [src]="product.image" />
+        <img [src]="producto.imagen" />
       </ion-thumbnail>
       <ion-label>
-        <h2>{{ product.title }}</h2>
-        <p>{{ product.price | currency:'USD' }}</p>
+        <h2>{{ producto.nombre }}</h2>
+        <p>{{ producto.precio | currency:'USD' }}</p>
       </ion-label>
-      <ion-button slot="end" (click)="addToCart(product)">
+      <ion-button slot="end" color="primary" (click)="agregarAlCarrito(producto)">
         Agregar
       </ion-button>
     </ion-item>
